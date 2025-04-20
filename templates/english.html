@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block body%}
+
+<div class="container my-4 border border-primary rounded-3 p-3 text-center bg-white shadow-sm text-primary mb-0" style="max-width: 400px; margin: auto;">
+    <h4>{{ date }}</h4>
+</div>
+
+<div class="d-flex justify-content-between mb-4 px-3">
+    <form method="POST" action="/save">
+        <input type="hidden" name="match_details_global" value='{{ match_details_global | tojson | safe }}'>
+        <div class="text-center mr-4">
+            <button class="btn btn-primary" style="padding: 10px 20px; font-size: 16px;"> Download </button>
+        </div>
+    </form>
+    <form method="POST" action="/display">
+        <input type="hidden" name="english">
+        <div class="text-center mr-4">
+            <button class="btn btn-primary" style="padding: 10px 20px; font-size: 16px;"> Arabic </button>
+        </div>
+    </form>
+</div>
+
+<div class="card shadow p-3 mb-5 rounded ">
+<table class="table table-hover text-center">
+    <thead>
+        <tr class="table-primary">
+            <th>Tournament</th>
+            <th>Team A</th>
+            <th>Team B</th>
+            <th>Score</th>
+            <th>Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for match in match_details_global %}
+        <tr>
+            <td>{{ match["Tournament"] }}</td>
+            <td>{{ match["Team A"] }}</td>
+            <td>{{ match["Team B"] }}</td>
+            <td>{{ match["Score"] }}</td>
+            <td>{{ match["Time"] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+
+<div class="text-center my-4">
+    <a href="/" class="btn btn-primary rounded-pill" style="padding: 10px 20px; font-size: 16px;">
+        Back to Home
+    </a>
+</div>
+
+{% endblock %}

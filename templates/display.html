@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+{% block body%}
+<div class="container my-4 border border-primary rounded-3 p-3 text-center bg-white shadow-sm text-primary mb-0" style="max-width: 400px; margin: auto;">
+    <h4>{{ date }}</h4>
+</div>
+<div class="d-flex justify-content-between mb-4 px-3">
+    <select id="championSelect">
+        <option>الكل</option>
+        {% for name in champion_names%}
+        <option>{{name}}</option>
+        {%endfor%}
+    </select>
+    <form method="POST" action="/save">
+        <input type="hidden" name="match_details" value='{{ match_details | tojson | safe }}'>
+        <div class="text-center mr-4">
+            <button class="btn btn-primary" style="padding: 10px 20px; font-size: 16px;"> Download </button>
+        </div>
+    </form>
+</div>
+
+<div class="card shadow p-3 mb-5 rounded ">
+<table class="table table-hover text-center">
+    <thead>
+        <tr class="table-primary">
+        {% for item in match_details[0]%}
+            <th>{{item}}</th>
+        {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for match in match_details %}
+        <tr class="match-row" data-champ="{{ match['البطولة'] }}">
+            <td>{{ match["البطولة"] }}</td>
+            <td>{{ match["الفريق الأول"] }}</td>
+            <td>{{ match["الفريق الثاني"] }}</td>
+            <td>{{match["النتيجة"] }}</td>
+            <td>{{match["الميعاد"] }}</td>
+        </tr>
+
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+
+<div class="text-center my-4">
+    
+    <a href="/" class="btn btn-primary rounded-pill" style="padding: 10px 20px; font-size: 16px;">
+        Back to Home
+    </a>
+</div>
+<script>
+    document.getElementById('championSelect').addEventListener('change', function () {
+        const selectedChampion = this.value;
+        const rows = document.querySelectorAll('.match-row');
+    
+        rows.forEach(row => {
+            const champ = row.getAttribute('data-champ');
+            if (selectedChampion === 'الكل' || champ === selectedChampion) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+    </script>
+    
+{% endblock %}

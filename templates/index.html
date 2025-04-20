@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <form action="/display" method="POST"
+          class="border rounded-4 shadow-lg"
+          style="width: 350px; height: 350px; padding: 30px;">
+
+        <div class="text-center mb-4">
+            <h4 class="fw-semibold text-primary">Enter the Date</h4>
+            <small class="text-muted">Format: MM/DD/YY</small>
+        </div>
+
+        <div class="mb-4">
+            <input type="text" name="date" autocomplete="off" autofocus
+                   placeholder="MM/DD/YY"
+                   class="form-control text-center fs-5 rounded-3 shadow-sm">
+        </div>
+
+        <div class="d-grid">
+            <button type="submit" class="btn btn-primary btn-lg shadow-sm rounded-3">
+                Submit
+            </button>
+        </div>
+
+    </form>
+</div>
+{% endblock %}
